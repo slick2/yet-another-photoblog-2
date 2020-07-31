@@ -29,6 +29,12 @@
 		var $imagefileList = null;
 		var $cachefileList = null;
 
+
+
+		function __construct(){
+			$this->YapbMaintainance();
+			
+		}
 		/**
 		 * Constructor
 		 *

@@ -43,7 +43,7 @@
 
 	/* Short and sweet */
 
-	require_once realpath(dirname(__file__) . '/lib/Yapb.class.php');
+	require_once plugin_dir_path( __FILE__ ) . '/lib/Yapb.class.php';
 	$yapb = new Yapb();
 
-?>
+

@@ -111,7 +111,7 @@
 		<li>WordPress Version: <?php checkWpVersion(get_bloginfo('version')) ?></li>
 		<li>WordPress Upload Directory: 
 			<?php
-				$upload_path = get_settings('upload_path');
+				$upload_path = get_option('upload_path');
 				$wp_upload_path = YAPB_WP_ROOT_DIR . YAPB_SYSTEM_SEPARATOR . preg_replace('#/|\\\#', YAPB_SYSTEM_SEPARATOR, $upload_path);
 				checkDirectory($wp_upload_path);
 			?>
@@ -200,15 +200,15 @@
 			</tr>
 			<tr>
 				<td>blogname</td>
-				<td><?php echo get_settings('blogname') ?></td>
+				<td><?php echo get_option('blogname') ?></td>
 			</tr>
 			<tr>
 				<td>siteurl</td>
-				<td><?php echo get_settings('siteurl') ?></td>
+				<td><?php echo get_option('siteurl') ?></td>
 			</tr>
 			<tr>
 				<td>home</td>
-				<td><?php echo get_settings('home') ?></td>
+				<td><?php echo get_option('home') ?></td>
 			</tr>
 			<tr>
 				<td>upload_dir</td>

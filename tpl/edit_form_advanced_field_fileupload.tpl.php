@@ -1,4 +1,4 @@
-<?php if ($this->image): ?>
+<?php if (!empty($this->image)): ?>
 
 	<!-- This fieldset gets rendered if we have an image attached to the post: Replace -->
 	<fieldset id="imageuploaddiv" style="margin:0;padding:0px;padding-top:1px;overflow:hidden;">
@@ -29,4 +29,4 @@
 		</div>
 	</fieldset>
 
-<?php endif ?>
+<?php endif;

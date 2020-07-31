@@ -81,7 +81,7 @@
 			require_once realpath(dirname(__FILE__) . '/../includes/YapbConstants.script.php');
 
 			// I18N support through GNU-Gettext files
-			load_plugin_textdomain('yapb', 'wp-content/plugins/' . YAPB_PLUGINDIR_NAME . '/lang/');
+			load_plugin_textdomain('yapb',false, 'wp-content/plugins/' . YAPB_PLUGINDIR_NAME . '/lang/',);
 
 			// Let's require some usefull stuff
 			require_once realpath(dirname(__FILE__) . '/YapbImage.class.php');
@@ -91,7 +91,7 @@
 			require_once realpath(dirname(__FILE__) . '/../includes/YapbTemplateFunctions.php');
 
 			// Initialize the savant2 templating engine
-			$this->tpl =& new Savant2();
+			$this->tpl = new Savant2();
 			$this->tpl->addPath('template', YAPB_TPL_PATH);
 
 			// Dashboard Activity Box
@@ -99,7 +99,7 @@
 			
 			// wp-admin post.php hooks
 			add_filter('edit_form_advanced', array(&$this, 'edit_form_advanced'));
-			if (get_settings('yapb_form_on_page_form')) {
+			if (get_option('yapb_form_on_page_form')) {
 				add_filter('edit_page_form', array(&$this, 'edit_form_advanced'));
 			}
 			
@@ -115,7 +115,7 @@
 			add_action('manage_posts_custom_column', array(&$this, 'manage_posts_custom_column'));
 
 			// the wp-loop
-			add_filter('the_posts', array(&$this, 'the_posts'));
+			add_filter('the_posts', array($this, 'the_posts'));
 
 			// options
 			add_action('admin_menu', array(&$this, 'add_options_panel'));
@@ -435,7 +435,7 @@
 		 * and assign found images to the particular posts
 		 * @param array $posts
 		 */
-		function the_posts(&$posts) {
+		function the_posts($posts) {
 			for ($i=0, $len=count($posts); $i<$len; $i++) {
 				$post = &$posts[$i];
 				if (!is_null($image = YapbImage::getInstanceFromDb($post->ID))) {
@@ -454,7 +454,7 @@
 				// We need some libraries on this page
 				wp_enqueue_script('prototype');
 				wp_enqueue_script('dbx');
-				add_options_page('Yapb', 'YAPB', 8, basename(__FILE__), array(&$this, 'render_options_panel_content'));
+				add_options_page('Yapb', 'YAPB', 'administrator', basename(__FILE__), array(&$this, 'render_options_panel_content'));
 		    }
 		}
 
@@ -669,7 +669,7 @@
 		 * @param number $post_id
 		 **/
 		function _generic_yapb_ping($post_id = 0) {
-			$services = get_settings('yapb_ping_sites');
+			$services = get_option('yapb_ping_sites');
 			$services = preg_replace("|(\s)+|", '$1', $services); // Kill dupe lines
 			$services = trim($services);
 			if ( '' != $services ) {
@@ -705,7 +705,7 @@
 				foreach ($categories as $category) {
 					if ($currentcat != $category->term_id && $parent == $category->parent) {
 						$pad = str_repeat('– ', $level);
-						$category->name = wp_specialchars($category->name);
+						$category->name = esc_html($category->name);
 						$result[$pad . $category->name] = $category->term_id;
 						$result = $result + $this->_options_categories_array($currentcat, $currentparent, $category->term_id, $level+1, $categories);
 					}
@@ -727,7 +727,9 @@
 						
 						$optionType = $optionArray[0];
 						$optionText = $optionArray[1];
-						$optionDefaultValue = $optionArray[2];
+						if(!empty($optionArray[2])){
+							$optionDefaultValue = $optionArray[2];
+						}
 
 						switch ($optionType) {
 
@@ -745,9 +747,10 @@
 								break;
 
 							case 'SELECT' :
-
-								$optionDefaultValue = $optionArray[3];
-								add_option($optionName, $optionDefaultValue);
+								if(!empty($optionArray[3])){
+									$optionDefaultValue = $optionArray[3];
+									add_option($optionName, $optionDefaultValue);
+								}
 								break;
 
 							case 'CHECKBOX' :
@@ -765,13 +768,13 @@
 						}
 
 					}
+					
 
 				}
-
 			}
 
 		}
 
 	}
 
-?>
+

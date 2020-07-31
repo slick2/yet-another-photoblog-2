@@ -77,6 +77,14 @@
 		 * @param string $uri the URI of the image 
 		 * @return YapbImage
 		 */
+		 
+		function __construct( $id=null, $post_id, $uri ){
+			$this->id = $id;
+			$this->post_id = $post_id;
+			$this->uri = $uri;
+			$this->_fetchImagesize();
+			
+		}
 		function YapbImage($id=null, $post_id, $uri) {
 			$this->id = $id;
 			$this->post_id = $post_id;
@@ -92,7 +100,7 @@
 		 * @param ezSQL_row_object $rowObject
 		 * @return YapbImage
 		 **/
-		function getInstanceFromDbRow($rowObject) {
+		public static function getInstanceFromDbRow($rowObject) {
 			return new YapbImage($rowObject->id, $rowObject->post_id, $rowObject->URI);
 		}
 
@@ -104,7 +112,7 @@
 		 * @param number $post_id
 		 * @return YapbImage
 		 **/
-		function getInstanceFromDb($post_id = null) {
+		public static function getInstanceFromDb($post_id = null) {
 
 			if (($post_id != null) && ($post_id != '')) {
 
@@ -288,7 +296,7 @@
 				 * @return string the unique thumbnail filename 
 				 **/
 				function _getUniqueThumbnailName(&$parameters) {
-					$extension = get_settings('yapb_phpthumb_output_format');
+					$extension = get_option('yapb_phpthumb_output_format');
 					return $this->_getUniqueThumbnailIdentifier($parameters) . '.' . $extension;
 				}
 
@@ -453,12 +461,12 @@
 			// If this image hasn't got an id yet
 			if (is_null($this->id)) {
 				// Image not persisted yet - We do an insert
-				$wpdb->query('INSERT INTO ' . YAPB_TABLE_NAME . ' (post_id, uri) values (' . $wpdb->escape($this->post_id) . ', \'' . $wpdb->escape($this->uri) . '\')');
+				$wpdb->query('INSERT INTO ' . YAPB_TABLE_NAME . ' (post_id, uri) values (' . esc_sql($this->post_id) . ', \'' . esc_sql($this->uri) . '\')');
 				// Additionally we want the primary id in case we need it afterwards
 				$this->id = $wpdb->get_var('SELECT LAST_INSERT_ID() as id');
 			} else {
 				// We have this image already - We do an update
-				$wpdb->query('UPDATE ' . YAPB_TABLE_NAME . ' uri=\'' . $wpdb->escape($this->uri) . '\' WHERE id = ' . $this->id);
+				$wpdb->query('UPDATE ' . YAPB_TABLE_NAME . ' uri=\'' . esc_sql($this->uri) . '\' WHERE id = ' . $this->id);
 			}
 
 		}
@@ -534,18 +542,18 @@
 			// Get some phpThumb configurations
 
 			$phpthumb->config_output_format = 
-				(is_null(get_settings('yapb_phpthumb_output_format')) ||
-				get_settings('yapb_phpthumb_output_format') == '')
+				(is_null(get_option('yapb_phpthumb_output_format')) ||
+				get_option('yapb_phpthumb_output_format') == '')
 					? null
-					: get_settings('yapb_phpthumb_output_format');
+					: get_option('yapb_phpthumb_output_format');
 			$phpthumb->config_output_interlace = 
-				is_null(get_settings('yapb_phpthumb_output_interlace')) || 
-				(get_settings('yapb_phpthumb_output_interlace') == '');
+				is_null(get_option('yapb_phpthumb_output_interlace')) || 
+				(get_option('yapb_phpthumb_output_interlace') == '');
 			$phpthumb->config_imagemagick_path = 
-				(is_null(get_settings('yapb_phpthumb_imagemagick_path')) ||
-				get_settings('yapb_phpthumb_imagemagick_path') == '')
+				(is_null(get_option('yapb_phpthumb_imagemagick_path')) ||
+				get_option('yapb_phpthumb_imagemagick_path') == '')
 					? null
-					: get_settings('yapb_phpthumb_imagemagick_path');
+					: get_option('yapb_phpthumb_imagemagick_path');
 
 			for ($i=0, $len=count($phpThumbConfig); $i<$len; $i++) {
 

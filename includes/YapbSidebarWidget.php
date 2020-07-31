@@ -18,7 +18,7 @@
 
 		if (
 			!array_key_exists('yapb', $GLOBALS) ||			// Yapb instanced?
-			!function_exists('register_sidebar_widget') 	// Sidebar widgets possible?
+			!function_exists('wp_register_sidebar_widget') 	// Sidebar widgets possible?
 		) return;
 
 		function yapbSidebarWidgetDraw($args) {
@@ -84,7 +84,7 @@
 			
 		}
 
-		register_sidebar_widget(array('YAPB Widget', 'widgets'), 'yapbSidebarWidgetDraw');
+		wp_register_sidebar_widget('yapb_widget', 'YAPB Widget', 'yapbSidebarWidgetDraw');
 
 	}
 

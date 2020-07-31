@@ -4,6 +4,11 @@
 
 		var $info = 'Class YapbUtils (C) 2006 by J.P.Jarolim';
 
+		public function __construct(){
+			$this->YapbUtils();
+			
+		}
+
 		/** constructor **/
 		function YapbUtils() {}
 
@@ -13,7 +18,7 @@
 		 * @param string $string
 		 * @return string
 		 */
-		function escape($string) {
+		public static function escape($string) {
 			$search = array(
 				"/'/",
 				"/[\r\n]+/",

@@ -45,7 +45,7 @@
 		// Since i take raw input for update i have to replace single quotes manually
 		$newvalue = preg_replace("#'#", "\\'", $newvalue);
 
-		$option_name = $wpdb->escape($option_name);
+		$option_name = esc_sql($option_name);
 		$wpdb->query("UPDATE $wpdb->options SET option_value = '$newvalue' WHERE option_name = '$option_name'");
 		if ( $wpdb->rows_affected == 1 ) {
 			do_action("update_option_{$option_name}", array('old'=>$oldvalue, 'new'=>$_newvalue));
