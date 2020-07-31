@@ -1,14 +1,14 @@
 <?php
 
-	/*	Plugin Name: Yet Another PhotoBlog
-		Plugin URI: http://johannes.jarolim.com/yapb
-		Version: BETA 1.7.4
-		Description: WordPress 2.3+ Plugin which allows to use WordPress as a PhotoBlog. Detailed informations may be found on the <a href="http://johannes.jarolim.com/yapb">plugin pages</a>.
-		Author: J.P.Jarolim
-		Author URI: http://johannes.jarolim.com
+	/*	Plugin Name: Yet Another PhotoBlog 2
+		Plugin URI: https://github.com/slick2/yet-another-photoblog-2
+		Version: BETA 2
+        Description: This Wordpress plugin enables, WordPress as a PhotoBlog. Continuation from the abandoned plugin by Johannes Jarolim.
+        Author: Carey Dayrit
+		Author URI: http://webtuners.pro
 	*/
 
-	/*  Copyright 2008 by J.P.Jarolim (email : yapb@johannes.jarolim.com)
+	/*  Copyright 2008 by J.P.Jarolim (email : yapb@johannes.jarolim.com)        
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by

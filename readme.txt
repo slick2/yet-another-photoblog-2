@@ -1,13 +1,12 @@
 === Yet Another Photoblog ===
 
-Contributors: jaroat
+Contributors: jaroat, slick2
 Donate link: http://johannes.jarolim.com/yapb/donate
 Tags: photoblog, photo blog, photo blogging, images, yapb, yet another photoblog
-Requires at least: 2.3
-Tested up to: 2.3.3
-Stable tag: 1.7.4
+Requires at least: 5.4
+Stable tag: 2.0.0
 
-Convert your WordPress 2.3+ installation into a full featured photoblog in virtually no time.
+Convert your WordPress installation into a full featured photoblog in virtually no time.
 
 
 
